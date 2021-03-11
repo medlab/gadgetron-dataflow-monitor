@@ -2,6 +2,10 @@ A Gadgetron Dataflow Monitor
 
 A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong Zhang
 
+#你好
+
+![](你好.jpg)
+
 #References
 
 1. https://matplotlib.org/stable/gallery/user_interfaces/embedding_in_qt_sgskip.html
