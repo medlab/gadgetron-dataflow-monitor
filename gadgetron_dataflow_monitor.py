@@ -184,7 +184,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             data=self.received_datas[self.data_index] # type: ismrmrd.Acquisition
             if(isinstance(data, ismrmrd.Acquisition)):
                 new_channel_index=self.channel_index-1
-                if new_channel_index>0:
+                if new_channel_index>=0:
                     #self.channel_index=self.channel_index+1
                     self.on_data_index_changed(self.data_index, new_channel_index)
         pass
@@ -273,6 +273,16 @@ def start_monitor(connection):
     app.raise_()
 
     qapp.exec_()
+
+def EmptyPythonGadget(connection):
+    try:
+        index=0
+        for acq in connection:
+            print(rf'acq index {index}')
+            index=index+1
+    except:
+        pass
+    pass
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
