@@ -17,6 +17,8 @@ from threading import Thread
 
 import ismrmrd
 
+import types
+
 os.environ['QT_API'] = 'pyside6'
 
 import sys
@@ -208,8 +210,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     DrawNext=QtCore.Signal(object)
 
-
-    def start_handle_data_flow(self, connection:Connection):
+    import typing
+    def start_handle_data_flow(self, pull_data_work:typing.Callable[QtCore.Signal(object), None]):
         logging.info("Connection established; visualizing.")
         #canvas=self.canvas
 
@@ -243,13 +245,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.DrawNext.connect(draw_next_impl,QtCore.Qt.QueuedConnection)
 
-        def pull_data():
-            for item in connection:
-                #datas.put(item)
-                self.DrawNext.emit(item)
-            pass
+        # def pull_data():
+        #     for item in connection:
+        #         #datas.put(item)
+        #         self.DrawNext.emit(item)
+        #     pass
 
-        Thread(target=pull_data).start() # TODO daemon?
+        Thread(target=pull_data_work,args=(self.DrawNext,)).start() # TODO daemon?
         # how about connection.config
         # how about connection.header
 
@@ -260,6 +262,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 
 def start_monitor(connection):
+    def pull_data(data_pulled_signal:QtCore.Signal(object)):
+        for item in connection:
+            # datas.put(item)
+            data_pulled_signal.emit(item)
+        pass
+    start_viewer(pull_data)
+    pass
+
+def start_viewer(pull_data_work):
     # Check whether there is already a running QApplication (e.g., if running
     # from an IDE).
     qapp = QtWidgets.QApplication.instance()
@@ -273,7 +284,7 @@ def start_monitor(connection):
     app.show()
     app.activateWindow()
     
-    app.start_handle_data_flow(connection)
+    app.start_handle_data_flow(pull_data_work)
     app.raise_()
 
     qapp.exec_()
