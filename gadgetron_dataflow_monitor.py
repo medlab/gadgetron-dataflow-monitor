@@ -21,6 +21,10 @@ os.environ['QT_API'] = 'pyside6'
 
 import sys
 
+print(rf'''
+python is run by {sys.executable}
+''')
+
 import numpy as np
 
 from PySide6 import QtCore, QtWidgets

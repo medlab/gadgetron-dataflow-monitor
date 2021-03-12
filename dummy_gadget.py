@@ -1,3 +1,9 @@
+import sys
+
+print(rf'''
+python is run by {sys.executable}
+''')
+
 def EmptyPythonGadget(connection):
     try:
         index=0

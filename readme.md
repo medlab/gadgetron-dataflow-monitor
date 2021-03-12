@@ -6,6 +6,21 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 
 ![](你好.jpg)
 
+# Quick Start
+
+## server side
+
+```bash
+#export PYTHONPATH=other_python_path_if_needed
+gadgetron
+```
+
+## tester side
+
+```bash
+gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/python_monitor_start_automate.xml
+```
+
 # TODO
 
 1. fix the speed problem of realtime update
