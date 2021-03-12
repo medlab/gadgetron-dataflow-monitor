@@ -53,6 +53,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout = QtWidgets.QVBoxLayout(self._main)
 
         self.canvas = FigureCanvas(Figure(figsize=(5, 3)))
+
+        self.canvas.setFocusPolicy(QtCore.Qt.ClickFocus)
+        #TODO not work here!
+        #self.canvas.setFocus()
+
         self.figure=self.canvas.figure
         self.ax=self.figure.subplots() # type: Axes
         self.ax.axis('off')
@@ -63,7 +68,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                   ('double' if event.dblclick else 'single', event.button,
                    event.x, event.y, event.xdata, event.ydata))
 
-        #cid1 = self.canvas.mpl_connect('key_release_event', self.on_key_press)
+        cid1 = self.canvas.mpl_connect('key_release_event', self.on_key_press)
 
         cid2 = self.canvas.mpl_connect('button_press_event', self.on_click)
 
@@ -74,25 +79,26 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         #?
 
         self.data_index=-1 # at the point befor start?
+        self.channel_index=0
         self.received_datas=[]
         #TODO how about False
         self.pause=True
 
 
-    def visualize(self, data, index):
-        logging.info(rf'data type is {type(data)}, index is {index}')
+    def visualize(self, data, index, channel):
+        logging.info(rf'data type is {type(data)}, index is {index}, channel is {channel}')
 
         #self.ax.axis('off')
         self.ax.clear()
         if isinstance(data, ismrmrd.Acquisition):
-            self.ax.title.set_text(f"Acquisition {index} [Magnitude; Channel 0]")
-            self.ax.plot(np.abs(data.data[0, :]))
+            self.ax.title.set_text(f"Acquisition {index} [Magnitude; Channel {channel}]")
+            self.ax.plot(np.abs(data.data[channel, :]))
         elif isinstance(data, gadgetron.types.AcquisitionBucket):
             for acquisition in data.data:
                 self.ax.plot(np.abs(acquisition.data[0, :]))
         elif isinstance(data, gadgetron.types.ReconData):
             data = data.bits[0].data.data
-            self.ax.set_title(f"ReconData {index} [Magnitude; Channel 0]")
+            self.ax.set_title(f"ReconData {index} [Magnitude; Channel {channel}]")
             self.ax.imshow(np.log(np.abs(np.squeeze(data[:, :, 0, 0]))))
         elif isinstance(data, gadgetron.types.ImageArray):
             
@@ -118,27 +124,40 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # t.single_shot=True
         # t.start()
 
-    def on_data_index_changed(self, new_index):
-        if( not new_index==self.data_index):
-            logging.info(rf'index will be change from {self.data_index} to { new_index }')
+    def on_data_index_changed(self, new_index, new_channel_index):
+        if not (new_index==self.data_index and new_channel_index==self.channel_index):
+            logging.info(rf'''
+            index will be change from {self.data_index} to { new_index }, 
+            channel from {self.channel_index} to {new_channel_index}''')
             self.data_index=new_index
-
-            self.visualize(self.received_datas[self.data_index], self.data_index)
+            self.channel_index=new_channel_index
+            self.visualize(self.received_datas[self.data_index], self.data_index,new_channel_index)
         pass
 
     def on_key_press(self, event: KeyEvent):
-        if(event.key=='p'):
-            self.pause=not self.pause
+        logging.info(rf'the key press event {event}')
+        if(event.key=='space'):
+            self.switch_pause()
             logging.info('[keyevent] pause')
-        elif(event.key=='['):
+        elif(event.key=='lelt'):
             logging.info('[keyevent] move left')
-            if self.data_index>0:
-                self.on_data_index_changed(self.data_index-1)
-        elif(event.key==']'):
+            self.show_old_data()
+        elif(event.key=='right'):
             logging.info('[keyevent] move right')
-            if self.data_index< len(self.received_datas)-1:
-                self.on_data_index_changed(self.data_index+1)
+            self.show_newer_data()
+        elif(event.key=='up'):
+            logging.info('[keyevent] move up')
+            self.show_upper_channel_data()
+            pass
+        elif(event.key=='down'):
+            logging.info('[keyevent] move down')
+            self.show_lower_channel_data()
+            pass
         pass
+
+    def show_old_data(self):
+        if self.data_index > 0:
+            self.on_data_index_changed(self.data_index - 1, 0)
 
     def on_click(self, event: MouseEvent):
 
@@ -146,18 +165,42 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         logging.info(rf'you press {button} {button.name}, {type(event.button)}')
 
         if(event.dblclick==True):
-            self.pause=not self.pause
+            self.switch_pause()
             logging.info(rf'[mouse event]  double click to pause or unpause, current {self.pause}')
         elif(event.button==MouseButton.LEFT): # left button
             logging.info('[mouse event]  move left')
-            if self.data_index>0:
-                self.on_data_index_changed(self.data_index-1)
+            self.show_old_data()
         elif(event.button==MouseButton.RIGHT): # right button
             logging.info('[mouse event]  move right')
-            if self.data_index< len(self.received_datas)-1:
-                self.on_data_index_changed(self.data_index+1)
+            self.show_newer_data()
         pass
 
+    def show_newer_data(self):
+        if self.data_index < len(self.received_datas) - 1:
+            self.on_data_index_changed(self.data_index + 1,0)
+
+    def show_lower_channel_data(self):
+        if 0<=self.data_index< len(self.received_datas):
+            data=self.received_datas[self.data_index] # type: ismrmrd.Acquisition
+            if(isinstance(data, ismrmrd.Acquisition)):
+                new_channel_index=self.channel_index-1
+                if new_channel_index>0:
+                    #self.channel_index=self.channel_index+1
+                    self.on_data_index_changed(self.data_index, new_channel_index)
+        pass
+
+    def show_upper_channel_data(self):
+        if 0<=self.data_index< len(self.received_datas):
+            data=self.received_datas[self.data_index] # type: ismrmrd.Acquisition
+            if(isinstance(data, ismrmrd.Acquisition)):
+                new_channel_index=self.channel_index+1
+                if new_channel_index<data.data.shape[0]:
+                    #self.channel_index=self.channel_index+1
+                    self.on_data_index_changed(self.data_index, new_channel_index)
+        pass
+
+    def switch_pause(self):
+        self.pause = not self.pause
 
     DrawNext=QtCore.Signal(object)
 

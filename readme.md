@@ -6,6 +6,11 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 
 ![](你好.jpg)
 
+# TODO
+
+1. fix the speed problem of realtime update
+2. fix the initial focus problem(can not receive key event unless user click on canvas)?
+
 # References
 
 1. https://matplotlib.org/stable/gallery/user_interfaces/embedding_in_qt_sgskip.html
