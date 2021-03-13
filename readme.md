@@ -26,6 +26,9 @@ gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/p
 1. fix the speed problem of realtime update
 2. fix the initial focus problem(can not receive key event unless user click on canvas)?
 3. add a sample to read data from testdata and show directly?
+4. prepare publish to pypi, project structure may need to adjust
+5. CD by github action 
+
 # References
 
 1. https://matplotlib.org/stable/gallery/user_interfaces/embedding_in_qt_sgskip.html
