@@ -239,6 +239,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             #self.canvas.flush_events()
             pass
 
+        #TODO this does not solve the problem, which is slow!!! the real slow source maybe the canvas draw?
+
         self.DrawNext.connect(draw_next_impl,QtCore.Qt.QueuedConnection)
 
         # def pull_data():
