@@ -20,11 +20,11 @@ pyplot.show()
 
 """
 
+from pathlib import Path
 import ismrmrd
 
-import gadgetron_dataflow_monitor
-from pathlib import Path
 from PySide6 import QtCore
+from gadm import gadgetron_dataflow_monitor
 
 def main():
     test_data_path=Path(__file__).parent/'test_datas'/'testdata.h5'
