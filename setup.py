@@ -10,7 +10,7 @@ depend_packages=[
 ]
 
 setup(
-    name='gadgetron-dataflow-monitor-CongZhang',
+    name='gadgetron-dataflow-monitor',
     version='0.91',
     description='Gadgetron Dataflow Monitor',
     long_description=open('readme.md').read(),
