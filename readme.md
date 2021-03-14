@@ -36,7 +36,8 @@ gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/p
 2. fix the initial focus problem(can not receive key event unless user click on canvas)?
 3. add a sample to read data from testdata and show directly? [done]
 4. rename and publish to pypi, project structure may need to adjust [wip]
-5. CD by github action 
+5. add a screen gif to demo how to use ( use peek software )
+6. CD by github action 
 
 # References
 
