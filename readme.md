@@ -18,7 +18,7 @@ gadgetron
 ## Tester side
 
 ```bash
-gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/python_monitor_start_automate.xml
+gadgetron_ismrmrd_client -f gadm/test_datas/testdata.h5  -C gadm/use_in_gadgetron_sample/python_monitor_start_automate.xml
 ```
 
 ## Internal

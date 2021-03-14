@@ -249,7 +249,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         #         self.DrawNext.emit(item)
         #     pass
 
-        Thread(target=pull_data_work,args=(self.DrawNext,)).start() # TODO daemon?
+        Thread(target=pull_data_work,args=(self.DrawNext,), daemon=True).start() # TODO daemon?
         # how about connection.config
         # how about connection.header
 
