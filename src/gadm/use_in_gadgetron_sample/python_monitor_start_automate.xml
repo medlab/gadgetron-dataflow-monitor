@@ -10,8 +10,8 @@
 <stream>
     <external>
 <!--        <execute name="gadm.gadgetron_dataflow_monitor full path or path relative to gadgetron start dir" target="start_monitor" type="python" />-->
-<!--        <execute name="gadm.gadgetron_dataflow_monitor" target="start_monitor" type="python" />-->
-            <execute name="gadm.dummy_gadget" target="EmptyPythonGadget" type="python" />
+        <execute name="gadm.gadgetron_dataflow_monitor" target="start_monitor" type="python" />
+<!--            <execute name="gadm.dummy_gadget" target="EmptyPythonGadget" type="python" />-->
         <configuration />
     </external>
 </stream>

@@ -8,6 +8,12 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 
 ![](你好.jpg)
 
+![](gadm_run_as_standalone_python.gif)
+
+![](gadm_start_as_gadget_by_gadgetron.gif)
+
+![](adm_start_as_external_stream_handler.gif)
+
 # Quick Start
 
 ## Server side
