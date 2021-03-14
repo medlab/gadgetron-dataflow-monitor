@@ -24,18 +24,18 @@ gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/p
 ## Internal
 
 1. [Core]A QT+Matplotlib UI application to show data
-2. Data Producer run in a standalone Thread to produce data and send to UI by trigger singal
+2. Data Producer run in a standalone Thread to produce data and send to UI by trigger signal
 3. The core Application can be use under three ways:
     1. As a start by hand external application which listen to gadgetron stream data
-    2. Use a data process gadget which start by gadgetron
-    3. Use a normal Python UI application which read data from ismrmrd file
+    2. Use as data process gadget which start by gadgetron
+    3. Use as normal Python UI application which read data from ismrmrd file
     
 # TODO
 
 1. fix the speed problem of realtime update
 2. fix the initial focus problem(can not receive key event unless user click on canvas)?
-3. add a sample to read data from testdata and show directly?
-4. prepare publish to pypi, project structure may need to adjust
+3. add a sample to read data from testdata and show directly? [done]
+4. rename and publish to pypi, project structure may need to adjust [wip]
 5. CD by github action 
 
 # References
