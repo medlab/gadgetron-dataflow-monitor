@@ -14,7 +14,7 @@ setup(
     version='0.91',
     description='Gadgetron Dataflow Monitor',
     long_description=open('readme.md').read(),
-    long_description_content_type='text/x-rst',
+    long_description_content_type='text/markdown',
     install_requires=depend_packages,
     author='Cong Zhang',
     author_email='congzhangzh@gmail.com',
