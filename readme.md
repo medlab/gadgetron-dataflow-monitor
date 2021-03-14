@@ -12,7 +12,7 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 
 ![](https://raw.githubusercontent.com/medlab/gadgetron-dataflow-monitor/main/gadm_start_as_gadget_by_gadgetron.gif)
 
-![](https://raw.githubusercontent.com/medlab/gadgetron-dataflow-monitor/main/adm_start_as_external_stream_handler.gif)
+![](https://raw.githubusercontent.com/medlab/gadgetron-dataflow-monitor/main/gadm_start_as_external_stream_handler.gif)
 
 # Quick Start
 
