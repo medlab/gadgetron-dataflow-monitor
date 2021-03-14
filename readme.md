@@ -11,13 +11,38 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 ## Server side
 
 ```bash
-#export PYTHONPATH=other_python_path_if_needed
+## --begin-- step just need when developing in loop, no need for end user after install 
+cd src
+## --end-- step just need when developing in loop, no need for end user after install 
+
 gadgetron
 ```
 
-## Tester side
+## 1. Tester side(gadget start by gadgetron)
 
 ```bash
+## --begin-- step just need when developing in loop, no need for end user after install 
+cd src
+## --end-- step just need when developing in loop, no need for end user after install 
+
+gadgetron_ismrmrd_client -f gadm/test_datas/testdata.h5  -C gadm/use_in_gadgetron_sample/python_monitor_start_automate.xml
+```
+
+## 2. Tester side(gadget start by hand)
+
+```bash
+## --begin-- step just need when developing in loop, no need for end user after install 
+cd src
+export PYTHONPATH=$PWD 
+## --end-- step just need when developing in loop, no need for end user after install 
+python -m gadm.gadgetron_dataflow_monitor
+```
+
+```bash
+## --begin-- step just need when developing in loop, no need for end user after install 
+cd src
+## --end-- step just need when developing in loop, no need for end user after install 
+
 gadgetron_ismrmrd_client -f gadm/test_datas/testdata.h5  -C gadm/use_in_gadgetron_sample/python_monitor_start_automate.xml
 ```
 
