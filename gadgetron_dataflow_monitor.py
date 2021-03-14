@@ -9,6 +9,7 @@
 
 """
 
+import typing
 import logging
 import multiprocessing
 import os
@@ -16,8 +17,6 @@ import queue
 from threading import Thread
 
 import ismrmrd
-
-import types
 
 os.environ['QT_API'] = 'pyside6'
 
@@ -47,9 +46,6 @@ from gadgetron.external.connection import Connection
 from multimethod import multimethod
 
 from matplotlib.axes import Axes
-#from matplotlib.axes._subplots import Axes
-
-
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -58,7 +54,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self._main)
         layout = QtWidgets.QVBoxLayout(self._main)
 
-        self.canvas = FigureCanvas(Figure(figsize=(5, 3)))
+        self.canvas = FigureCanvas(Figure(figsize=(6,4)))
 
         self.canvas.setFocusPolicy(QtCore.Qt.ClickFocus)
         #TODO not work here!
@@ -67,7 +63,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.figure=self.canvas.figure
         self.ax=self.figure.subplots() # type: Axes
         self.ax.axis('off')
-        self.ax.set_title('Use LeftButton/RightButton/Double To Interactive')
+        self.ax.set_title('Use Left/Right/Double or ← ↑ → ↓ ([bug]click first) To Interactive')
 
         def onclick(event):
             print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
@@ -210,7 +206,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     DrawNext=QtCore.Signal(object)
 
-    import typing
+
     def start_handle_data_flow(self, pull_data_work:typing.Callable[QtCore.Signal(object), None]):
         logging.info("Connection established; visualizing.")
         #canvas=self.canvas
@@ -270,7 +266,7 @@ def start_monitor(connection):
     start_viewer(pull_data)
     pass
 
-def start_viewer(pull_data_work):
+def start_viewer(pull_data_work:typing.Callable[QtCore.Signal(object), None]):
     # Check whether there is already a running QApplication (e.g., if running
     # from an IDE).
     qapp = QtWidgets.QApplication.instance()

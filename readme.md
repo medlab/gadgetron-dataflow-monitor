@@ -8,19 +8,28 @@ A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong 
 
 # Quick Start
 
-## server side
+## Server side
 
 ```bash
 #export PYTHONPATH=other_python_path_if_needed
 gadgetron
 ```
 
-## tester side
+## Tester side
 
 ```bash
 gadgetron_ismrmrd_client -f test_datas/testdata.h5  -C use_in_gadgetron_sample/python_monitor_start_automate.xml
 ```
 
+## Internal
+
+1. [Core]A QT+Matplotlib UI application to show data
+2. Data Producer run in a standalone Thread to produce data and send to UI by trigger singal
+3. The core Application can be use under three ways:
+    1. As a start by hand external application which listen to gadgetron stream data
+    2. Use a data process gadget which start by gadgetron
+    3. Use a normal Python UI application which read data from ismrmrd file
+    
 # TODO
 
 1. fix the speed problem of realtime update
