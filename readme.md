@@ -2,6 +2,8 @@ A Gadgetron Dataflow Monitor
 
 A Gadgetron debugger tools by Python with QT plus matplotlib, with love by Cong Zhang
 
+[![Publish Python 🐍 distributions 📦 to PyPI and TestPyPI](https://github.com/medlab/gadgetron-dataflow-monitor/actions/workflows/python-publish.yml/badge.svg)](https://github.com/medlab/gadgetron-dataflow-monitor/actions/workflows/python-publish.yml)
+
 # 你好
 
 ![](你好.jpg)
