@@ -290,7 +290,8 @@ def start_viewer(pull_data_work:typing.Callable[QtCore.Signal(object), None]):
 def EmptyPythonGadget(connection):
     try:
         index=0
-        for acq in connection:
+        for item in connection:
+            acq=item # type: ismrmrd.Acquisition
             print(rf'acq index {index}')
             index=index+1
     except:
