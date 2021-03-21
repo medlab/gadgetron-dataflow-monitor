@@ -4,14 +4,14 @@
 from setuptools import setup
 
 depend_packages=[
-       'PySide6',
-       'matplotlib',
         'gadgetron',
+        'matplotlibqml',
+        'PySide6',
 ]
 
 setup(
     name='gadgetron-dataflow-monitor',
-    version='0.95',
+    version='0.95.001',
     description='Gadgetron Dataflow Monitor',
     long_description=open('readme.md').read(),
     long_description_content_type='text/markdown',

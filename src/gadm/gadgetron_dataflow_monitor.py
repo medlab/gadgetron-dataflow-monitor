@@ -30,8 +30,9 @@ import numpy as np
 
 from PySide6 import QtCore, QtWidgets
 
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas, \
-    NavigationToolbar2QT as NavigationToolbar
+# from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas, \
+#     NavigationToolbar2QT as NavigationToolbar
+from matplotlibqml.matplotlibqml import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QtQuick as NavigationToolbar
 
 from matplotlib.figure import Figure
 
@@ -77,7 +78,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.canvas)
 
         self.nav_toolbar=NavigationToolbar(self.canvas, self)
-        self.addToolBar(self.nav_toolbar)
+        #self.addToolBar(self.nav_toolbar)
         #?
 
         self.data_index=-1 # at the point befor start?
@@ -207,7 +208,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     DrawNext=QtCore.Signal(object)
 
 
-    def start_handle_data_flow(self, pull_data_work:typing.Callable[QtCore.Signal(object), None]):
+    def start_handle_data_flow(self, pull_data_work:typing.Callable[[QtCore.Signal(object)], None]):
         logging.info("Connection established; visualizing.")
         #canvas=self.canvas
 
@@ -268,7 +269,7 @@ def start_monitor(connection):
     start_viewer(pull_data)
     pass
 
-def start_viewer(pull_data_work:typing.Callable[QtCore.Signal(object), None]):
+def start_viewer(pull_data_work:typing.Callable[[QtCore.Signal], None]):
     # Check whether there is already a running QApplication (e.g., if running
     # from an IDE).
     qapp = QtWidgets.QApplication.instance()
