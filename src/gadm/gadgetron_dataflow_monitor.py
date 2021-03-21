@@ -142,7 +142,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if(event.key=='space'):
             self.switch_pause()
             logging.info('[keyevent] pause')
-        elif(event.key=='lelt'):
+        elif(event.key=='left'):
             logging.info('[keyevent] move left')
             self.show_old_data()
         elif(event.key=='right'):
