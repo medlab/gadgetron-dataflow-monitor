@@ -32,7 +32,7 @@ from PySide6 import QtCore, QtWidgets
 
 # from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas, \
 #     NavigationToolbar2QT as NavigationToolbar
-from matplotlibqml.matplotlibqml import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QtQuick as NavigationToolbar
+from matplotlibqml.matplotlibqml import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QT as NavigationToolbar
 
 from matplotlib.figure import Figure
 
@@ -78,7 +78,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.canvas)
 
         self.nav_toolbar=NavigationToolbar(self.canvas, self)
-        #self.addToolBar(self.nav_toolbar)
+        self.addToolBar(self.nav_toolbar)
         #?
 
         self.data_index=-1 # at the point befor start?
@@ -260,11 +260,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         logging.info("finish install Visualization hook!")
 
 
-def start_monitor(connection):
+def start_monitor(connection:gadgetron.external.Connection(socket)):
     def pull_data(data_pulled_signal:QtCore.Signal(object)):
         for item in connection:
             # datas.put(item)
             data_pulled_signal.emit(item)
+            connection.send(item)
         pass
     start_viewer(pull_data)
     pass
