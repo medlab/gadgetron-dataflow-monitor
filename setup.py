@@ -11,7 +11,7 @@ depend_packages=[
 
 setup(
     name='gadgetron-dataflow-monitor',
-    version='0.96.000',
+    version='0.96.001',
     description='Gadgetron Dataflow Monitor',
     long_description=open('readme.md').read(),
     long_description_content_type='text/markdown',

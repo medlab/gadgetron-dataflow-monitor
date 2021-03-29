@@ -260,7 +260,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         logging.info("finish install Visualization hook!")
 
 
-def start_monitor(connection:gadgetron.external.Connection(socket)):
+def start_monitor(connection:gadgetron.external.Connection):
     def pull_data(data_pulled_signal:QtCore.Signal(object)):
         for item in connection:
             # datas.put(item)
